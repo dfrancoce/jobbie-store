@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+/dev
+/venv
+.pytest_cache/
+.vscode/
+jobbie-store.iml
+out/
+logs/
