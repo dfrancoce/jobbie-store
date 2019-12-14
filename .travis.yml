@@ -5,3 +5,13 @@ install:
   - pip install -r app/requirements.txt
 script:
   - python -m pytest tests
+deploy:
+  provider: lambda
+  function_name: "jobbie-store"
+  region: "us-east-1"
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  role: $ROLE
+  runtime: "python3.7"
+  handler_name: "app.lambda_handler"
