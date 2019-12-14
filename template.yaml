@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  jobbie-store
+
+  Stores the job offers collected into the DB
+
+Globals:
+  Function:
+    Timeout: 3
+
+Parameters:
+  Queue:
+    Type: String
+    Description: jobbie-collector queue
+    Default:
+
+Resources:
+  JobbieStoreFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: app/
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Events:
+        JobbieCollectorEvent:
+          Type: SQS
+          Properties:
+            Queue: !Ref Queue
+            BatchSize: 10
