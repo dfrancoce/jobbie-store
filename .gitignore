@@ -8,3 +8,5 @@ __pycache__/
 jobbie-store.iml
 out/
 logs/
+/.aws-sam/
+env.json
