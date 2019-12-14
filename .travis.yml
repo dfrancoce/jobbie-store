@@ -14,4 +14,5 @@ deploy:
     secure: $AWS_SECRET_KEY
   role: $ROLE
   runtime: "python3.7"
-  handler_name: "/app/app.lambda_handler"
+  module_name: "app"
+  handler_name: "app.lambda_handler"
