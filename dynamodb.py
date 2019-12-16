@@ -1,4 +1,4 @@
-from app.repository.models import JobOffer
+from models import JobOffer
 
 
 def save(payloads):
