@@ -1,6 +1,6 @@
 import pytest
 
-from app import app
+import app
 
 
 @pytest.fixture()
@@ -43,7 +43,7 @@ def sqs_event():
 
 
 def test_lambda_handler(sqs_event, mocker):
-    mocker.patch('app.repository.dynamodb.save')
+    mocker.patch('app.dynamodb.save')
 
     ret = app.lambda_handler(sqs_event, "")
     data = ret["body"]

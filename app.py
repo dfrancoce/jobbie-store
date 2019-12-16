@@ -1,4 +1,4 @@
-from app.repository import dynamodb
+import dynamodb
 
 
 def lambda_handler(event, context):

@@ -1,7 +1,7 @@
 from moto import mock_dynamodb2
 
-from app.repository import dynamodb
-from app.repository.models import JobOffer
+import dynamodb
+from models import JobOffer
 
 test_payload_1 = {
     "hash": "a7ff38ad4d0546381be5e14704222eca692579a56c73cc26abab1ae101c1c42b",

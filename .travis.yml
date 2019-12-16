@@ -2,7 +2,7 @@ language: python
 python:
   - "3.6"
 install:
-  - pip install -r app/requirements.txt
+  - pip install -r requirements.txt
 script:
   - python -m pytest tests
 deploy:
@@ -14,5 +14,4 @@ deploy:
     secure: $AWS_SECRET_KEY
   role: $ROLE
   runtime: "python3.7"
-  module_name: "app"
   handler_name: "app.lambda_handler"
