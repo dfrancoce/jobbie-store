@@ -15,4 +15,4 @@ deploy:
   role: $ROLE
   runtime: "python3.7"
   module_name: "app"
-  handler_name: "app.lambda_handler"
+  handler_name: "lambda_handler"
