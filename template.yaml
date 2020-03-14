@@ -13,7 +13,6 @@ Parameters:
   Queue:
     Type: String
     Description: jobbie-collector queue
-    Default:
 
 Resources:
   JobbieStoreFunction:
