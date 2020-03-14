@@ -8,11 +8,10 @@ install:
 - pip install aws-sam-cli
 script:
 - sam validate
-- sam package --template-file template.yaml --s3-bucket jobbie-store --output-template-file
-  packaged.yaml
+- sam package --template-file template.yaml --s3-bucket jobbie-store --output-template-file packaged.yaml
 deploy:
   provider: script
-  script: sam deploy --template-file packaged.yaml --stack-name jobbie-store-stack
+  script: sam deploy --template-file packaged.yaml --stack-name jobbie-store-stack --capabilities CAPABILITY_IAM
   skip_cleanup: true
   on:
     branch: master
