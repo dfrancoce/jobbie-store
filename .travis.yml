@@ -1,21 +1,22 @@
 language: python
 python:
-  - "3.6"
+- '3.6'
 branches:
   only: master
 install:
-  - pip install awscli
-  - pip install aws-sam-cli
+- pip install awscli
+- pip install aws-sam-cli
 script:
-  - sam validate
-  - sam package --template-file template.yaml --s3-bucket jobbie-store --output-template-file packaged.yaml
+- sam validate
+- sam package --template-file template.yaml --s3-bucket jobbie-store --output-template-file
+  packaged.yaml
 deploy:
   provider: script
   script: sam deploy --template-file packaged.yaml --stack-name jobbie-store-stack
   skip_cleanup: true
-  access_key_id: $AWS_ACCESS_KEY
+  access_key_id: "$AWS_ACCESS_KEY"
   secret_access_key:
-    secure: $AWS_SECRET_KEY
-  aws_default_region: $AWS_DEFAULT_REGION
+    secure: cZJzKl9JVzFrw0r3p/jeasIuVbc1ykRwOCs/8GmfPPHBmo4xrLByfkpLNgKBw93h3iv2sfzGwFWDjJNHDvo3+nP37ydYXS3fNujwDAVbZ03eXeUBZYbb8jIKwfKPdwwFOAHq7C3i/4FTEfzCemM/6ZDvXROLCYvDlxYI/xLF7/SXn2QdIxzBIs1QiYZpg/0hwS8uHNjs8ZCZ/i1aAit9lQSAcaRF/eDEkn8cU9mfP9kppdjVPj95wkshaQ7sBpbFrBKJ1jX/XqUi+kte84D0qxLZZgsaP53wNbZEj/D3taAWwEc8rcC/z1KYzs+qwv1GYRBepEe/OwreyxpvRKI5lTSTvUkY0PBlBrO0LR90DhJkkBDOxsppVYtgaGDUL48Pk/uDOMS8pA9rhzKpL7rUgW4Yb7nQ2exh5xaDcFSztmESmoSVfVrHUinOXL4IQWV6fmkgdGiEKjldl2SrxoE8uDwChLceyzZNxp+UjdavyN3rVWElyuRuqTENwvispWUOsaNBlPrAXN8xrsEBEUi4iktHuvZDsRqQOLee17Eg1HV0wXTXbCmeYiRWctu+lIAGeOprkXxNDW6TKzrhSR29QXkuQewgl+7Xf0umqG7/eRVWDxwFKiJTq4OT5YiinG+AarhRLYdOF1YArV3SIfiTAd1I6AtmRpVMrcBtMvQt1pg=
+  aws_default_region: "$AWS_DEFAULT_REGION"
   on:
     branch: master
