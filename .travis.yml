@@ -1,18 +1,22 @@
 language: python
 python:
   - "3.6"
+branches:
+  only: master
 install:
-  - pip install -r requirements.txt
+  - pip install awscli
+  - pip install aws-sam-cli
 script:
-  - python -m pytest tests
+  - sam validate
+  - sam package --template-file template.yaml --s3-bucket jobbie-store --output-template-file packaged.yaml
 deploy:
-  provider: lambda
-  function_name: "jobbie-store"
-  region: "us-east-1"
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: $AWS_SECRET_KEY
-  role: $ROLE
-  runtime: "python3.7"
-  module_name: "app"
-  handler_name: "lambda_handler"
+  provider: script
+  script: sam deploy --template-file packaged.yaml --stack-name jobbie-store-stack
+  skip_cleanup: true
+  on:
+    branch: master
+env:
+  global:
+  - access_key_id: $AWS_ACCESS_KEY
+  - secret_access_key:
+      secure: $AWS_SECRET_KEY
