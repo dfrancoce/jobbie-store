@@ -9,11 +9,6 @@ Globals:
   Function:
     Timeout: 3
 
-Parameters:
-  Queue:
-    Type: String
-    Description: jobbie-collector queue
-
 Resources:
   JobbieStoreFunction:
     Type: AWS::Serverless::Function
@@ -25,5 +20,8 @@ Resources:
         JobbieCollectorEvent:
           Type: SQS
           Properties:
-            Queue: !Ref Queue
+            Queue: !GetAtt JobbieCollectorQueue.Arn
             BatchSize: 10
+
+  JobbieCollectorQueue:
+    Type: AWS::SQS::Queue
