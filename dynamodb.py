@@ -1,20 +1,26 @@
-from models import JobOffer
+import os
+
+import boto3
+from boto.awslambda.exceptions import ResourceNotFoundException
+
+table_name = os.environ['TABLE_NAME']
 
 
 def save(payloads):
-    JobOffer.create_table(read_capacity_units=1, write_capacity_units=1)
+    table = boto3.resource('dynamodb', region_name="us-east-1").Table(table_name)
 
     for payload in payloads:
-        job_offer = JobOffer()
-        job_offer.hash = payload['hash']
-        job_offer.url = payload['url']
-        job_offer.position = payload['position']
-        job_offer.description = payload['description']
-        job_offer.company = payload['company']
-        job_offer.date = payload['date']
-        job_offer.tags = payload['tags']
-
         try:
-            JobOffer.get(job_offer.hash)
-        except JobOffer.DoesNotExist:
-            job_offer.save()
+            table.get_item(Key={'hash': payload['hash']})
+        except ResourceNotFoundException:
+            table.put_item(
+                Item={
+                    'hash': payload['hash'],
+                    'url': payload['url'],
+                    'position': payload['position'],
+                    'description': payload['description'],
+                    'company': payload['company'],
+                    'date': payload['date'],
+                    'tags': payload['tags']
+                }
+            )

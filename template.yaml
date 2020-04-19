@@ -9,6 +9,17 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+  TABLE_NAME:
+    Type: String
+    Description: The DynamoDB table for storing the Jobs information.
+    Default: 'JobsTable'
+
+  QUEUE_NAME:
+    Type: String
+    Description: The Queue that contains the job events
+    Default: 'JobsQueue'
+
 Resources:
   JobbieStoreFunction:
     Type: AWS::Serverless::Function
@@ -20,8 +31,28 @@ Resources:
         JobbieCollectorEvent:
           Type: SQS
           Properties:
-            Queue: !GetAtt JobbieCollectorQueue.Arn
+            Queue: !GetAtt JobsQueue.Arn
             BatchSize: 10
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TABLE_NAME
+          QUEUE_NAME: !Ref QUEUE_NAME
 
-  JobbieCollectorQueue:
+  JobsQueue:
     Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Ref QUEUE_NAME
+
+  JobsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref TABLE_NAME
+      KeySchema:
+        - AttributeName: hash
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: hash
+          AttributeType: S
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1

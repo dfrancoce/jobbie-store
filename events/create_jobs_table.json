@@ -1,0 +1,13 @@
+{
+  "TableName": "JobsTable",
+  "KeySchema": [
+    { "AttributeName": "hash", "KeyType": "HASH" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "hash", "AttributeType": "S" }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  }
+}
